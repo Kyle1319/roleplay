@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 
-# 加载.env文件中的环境变量（包含API密钥）
+# 加载.env文件中的环境变量
 load_dotenv()
 os.environ["http_proxy"] = "http://localhost:7890"
 os.environ["https_proxy"] = "http://localhost:7890"
@@ -36,10 +36,10 @@ def start_chat():
     Always reply in English.
     """
     
-    # 初始化对话历史（用于向API传递上下文）
+    # 初始化对话历史
     messages = [{"role": "system", "content": character_setting}]
     
-    # 初始化对话记录列表（用于保存到文件）
+    # 初始化对话记录列表
     chat_history = []
     # 记录对话开始时间
     start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -50,7 +50,7 @@ def start_chat():
     # 打印启动信息
     print("English Chat with British Passer-by")
     print("I say: Hi there!")
-    print("Tip: Type 'exit' to end the conversation")
+    print("Tip: Type 'exit' or 'bye' to end the conversation")
     print("-----------------------------------")
     
     # 初始用户消息
@@ -63,7 +63,7 @@ def start_chat():
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",  # 使用的AI模型
             messages=messages,      # 对话历史上下文
-            temperature=0.8         # 回复随机性（0-1，越高越灵活）
+            temperature=0.8         # 回复随机性
         )
         
         # 提取并显示AI回复
@@ -88,7 +88,7 @@ def start_chat():
             # 将用户输入加入对话历史
             messages.append({"role": "user", "content": user_input})
             
-            # 调用API获取回复（带错误处理）
+            # 调用API获取回复
             try:
                 response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
@@ -153,7 +153,7 @@ def start_chat():
         chat_history.append(f"\n-----------------------------------")
         chat_history.append(f"对话结束时间：{end_time}")
         
-        # 生成唯一文件名（用时间戳避免重名）
+        # 生成唯一文件名
         filename = f"chat_record_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
         # 获取当前脚本所在目录（确保文件保存在同级目录）
         current_dir = os.path.dirname(os.path.abspath(__file__))
