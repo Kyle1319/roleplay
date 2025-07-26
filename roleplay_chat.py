@@ -6,7 +6,8 @@ from datetime import datetime
 
 # 加载.env文件中的环境变量（包含API密钥）
 load_dotenv()
-
+os.environ["http_proxy"] = "http://localhost:7890"
+os.environ["https_proxy"] = "http://localhost:7890"
 # 从环境变量中获取OpenAI API密钥
 api_key = os.getenv("OPENAI_API_KEY")
 
